@@ -20,19 +20,20 @@ classDiagram
 
     class Task {
         +int id
-        +str title
+        +str description
         +int duration_minutes
+        +str frequency
         +str priority
         +bool completed
         +mark_complete() void
-        +edit(title, duration_minutes, priority) void
+        +edit(description, duration_minutes, frequency, priority) void
     }
 
     class Scheduler {
         +Owner owner
         +build_plan() DailyPlan
         -rank_tasks(tasks) list~Task~
-        -explain(task, reason) str
+        -explain(task, scheduled, remaining) str
     }
 
     class DailyPlan {
