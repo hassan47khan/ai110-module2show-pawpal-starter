@@ -12,6 +12,17 @@ A busy pet owner needs help staying consistent with pet care. They want an assis
 
 Your job is to design the system first (UML), then implement the logic in Python, then connect it to the Streamlit UI.
 
+## ✨ Features
+
+- **Owner / pet / task model** — one owner manages multiple pets, each with its own care tasks (description, duration, priority, frequency, optional time of day).
+- **Priority-based daily plan** — `build_plan()` ranks tasks by priority (shorter duration breaks ties) and fits as many as possible into the owner's available minutes, assigning each a start time.
+- **Explainable output** — every scheduled task comes with a reason, and tasks that don't fit are listed with why they were skipped.
+- **Sort by time** — `sort_by_time()` returns tasks in chronological order by their `"HH:MM"` time.
+- **Filtering** — `filter_tasks()` narrows tasks by completion status, by pet, or both.
+- **Conflict warnings** — `detect_conflicts()` flags any two tasks booked at the same time (same or different pets) without crashing.
+- **Daily / weekly recurrence** — completing a recurring task auto-creates its next occurrence, advancing the due date by one day or one week.
+- **Streamlit UI** — add pets and tasks, then generate a formatted schedule with conflict warnings in the browser.
+
 ## What you will build
 
 Your final app should:
@@ -114,12 +125,21 @@ Beyond the basic daily plan, PawPal+ adds four scheduling behaviors:
 
 ## 📸 Demo Walkthrough
 
-Describe your app in numbered steps so a reader can follow along without watching a video:
+Follow these steps to run and demo the app end to end.
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+**Workflow steps:**
+
+1. <!-- e.g. Launch the app: `streamlit run app.py` -->
+2. <!-- e.g. Set the owner name and available minutes for the day -->
+3. <!-- e.g. Add two pets -->
+4. <!-- e.g. Add several tasks, including two at the same time of day -->
+5. <!-- e.g. Click "Generate schedule" and point out the conflict warning -->
+6. <!-- e.g. Read the resulting plan table and the "left out" list -->
+
+**CLI demo (`python main.py`):**
+
+```text
+# Paste the terminal output of `python main.py` here
+```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->

@@ -65,6 +65,7 @@ if owner.pets:
     with tcol1:
         task_title = st.text_input("Task description", value="Morning walk")
         duration = st.number_input("Duration (minutes)", min_value=1, max_value=240, value=20)
+        start_time = st.text_input("Time of day (HH:MM, optional)", value="")
     with tcol2:
         priority = st.selectbox("Priority", ["low", "medium", "high"], index=2)
         frequency = st.selectbox("Frequency", ["daily", "weekly"], index=0)
@@ -78,6 +79,7 @@ if owner.pets:
                 duration_minutes=int(duration),
                 frequency=frequency,
                 priority=priority,
+                scheduled_time=start_time.strip(),
             )
         )
         st.session_state.next_task_id += 1
@@ -109,20 +111,36 @@ st.divider()
 # --- Build the schedule -------------------------------------------------------
 st.subheader("4. Today's Schedule")
 if st.button("Generate schedule"):
-    plan = Scheduler(owner).build_plan()
+    scheduler = Scheduler(owner)
+
+    # Warn about any tasks the owner booked at the same time of day.
+    for message in scheduler.detect_conflicts():
+        st.warning(f"⚠️ {message}")
+
+    plan = scheduler.build_plan()
 
     if plan.entries:
         st.markdown(f"**{len(plan.entries)} task(s) scheduled — {plan.total_minutes} min used**")
-        for entry in plan.entries:
-            task = entry.task
-            st.markdown(
-                f"**{entry.start_time}** — {task.description} "
-                f"({task.duration_minutes} min) · _{task.priority} priority_"
-            )
+        st.table(
+            [
+                {
+                    "Time": entry.start_time,
+                    "Task": entry.task.description,
+                    "Minutes": entry.task.duration_minutes,
+                    "Priority": entry.task.priority,
+                    "Why": entry.reason,
+                }
+                for entry in plan.entries
+            ]
+        )
     else:
-        st.warning("Nothing could be scheduled in the time available.")
+        st.info("Nothing could be scheduled in the time available.")
 
     if plan.skipped:
-        with st.expander(f"Left out ({len(plan.skipped)})"):
-            for task, reason in plan.skipped:
-                st.write(f"- **{task.description}** — {reason}")
+        st.markdown("**Left out (not enough time):**")
+        st.table(
+            [
+                {"Task": task.description, "Minutes": task.duration_minutes, "Reason": reason}
+                for task, reason in plan.skipped
+            ]
+        )

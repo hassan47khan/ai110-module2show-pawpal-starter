@@ -137,6 +137,33 @@ How I evaluated what the AI suggested, in general:
 - <!-- e.g. I checked the generated UML and code against each other to make sure they matched -->
 - <!-- e.g. I read the reasoning rather than trusting it, and asked follow-up questions when unsure -->
 
+**c. AI strategy**
+
+*Which AI features were most effective?*
+
+- <!-- Which capabilities helped most? e.g. generating boilerplate from a clear spec, reviewing
+  my own code for bottlenecks, keeping the UML in sync with the implementation, drafting tests -->
+- <!-- Why were those the most valuable for this project specifically? -->
+
+*One suggestion I rejected*
+
+- **The suggestion:** <!-- e.g. a design change, a library, a different data structure -->
+- **Why I rejected it:** <!-- your reasoning -->
+- **What I did instead:** <!-- the alternative I chose -->
+
+*How separate chat sessions helped*
+
+- <!-- e.g. I broke the project into phases (design, implementation, algorithms, tests, polish)
+  and used a focused session for each, so each conversation stayed on one goal -->
+- <!-- What was the benefit of scoping sessions this way? e.g. clearer prompts, less context drift,
+  easier to verify one thing at a time -->
+
+*What I learned about being the "lead architect"*
+
+- <!-- e.g. the AI produced code fast, but I owned the decisions: naming, what to keep out of scope,
+  which tradeoffs were acceptable, and whether the output was actually correct -->
+- <!-- One concrete decision I made as the architect: -->
+
 ---
 
 ## 4. Testing and Verification
