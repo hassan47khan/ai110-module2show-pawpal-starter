@@ -92,13 +92,33 @@ time budget is a single number on Owner.
 
 **a. How you used AI**
 
-- How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
-- What kinds of prompts or questions were most helpful?
+I used AI as a design and implementation partner across the whole workflow. The table below
+tracks each place I leaned on it, what it suggested, and what I did with that suggestion.
+
+| Stage | What the AI suggested | What I accepted / rejected | How I verified it |
+|-------|-----------------------|----------------------------|-------------------|
+| Brainstorming objects | <!-- e.g. a six-class design: Owner, Pet, Task, Scheduler, DailyPlan, PlanEntry --> | <!-- Accepted / rejected / changed what? --> | <!-- e.g. checked each class maps to a core action --> |
+| UML diagram | <!-- e.g. a Mermaid classDiagram with those classes and relationships --> | <!-- --> | <!-- e.g. ran it through a Mermaid validator / renderer --> |
+| Class skeleton | <!-- e.g. dataclasses with empty method stubs --> | <!-- --> | <!-- e.g. confirmed it imported with no errors --> |
+| Scheduling logic | <!-- e.g. rank by priority, fit into available_minutes, explain skips --> | <!-- --> | <!-- e.g. ran main.py and read the printed schedule --> |
+| Tests | <!-- e.g. pytest tests for mark_complete and add_task --> | <!-- --> | <!-- e.g. ran pytest and saw them pass --> |
+
+The prompts that helped most were the ones where I <!-- describe the style of prompt that worked:
+e.g. gave specific requirements per class, or asked the AI to review its own code for problems -->.
 
 **b. Judgment and verification**
 
-- Describe one moment where you did not accept an AI suggestion as-is.
-- How did you evaluate or verify what the AI suggested?
+One moment where I did **not** accept an AI suggestion as-is:
+
+- **What the AI proposed:** <!-- e.g. it flagged that Task.id was caller-supplied and could collide -->
+- **What I decided instead:** <!-- e.g. I kept it for now because ... / I changed it to ... -->
+- **Why:** <!-- your reasoning -->
+
+How I evaluated what the AI suggested, in general:
+
+- <!-- e.g. I ran the code myself and compared the output to what I expected by hand -->
+- <!-- e.g. I checked the generated UML and code against each other to make sure they matched -->
+- <!-- e.g. I read the reasoning rather than trusting it, and asked follow-up questions when unsure -->
 
 ---
 

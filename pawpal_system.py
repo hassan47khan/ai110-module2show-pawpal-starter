@@ -129,6 +129,7 @@ class Scheduler:
     """Builds a DailyPlan from an owner's tasks and time budget."""
 
     def __init__(self, owner: Owner) -> None:
+        """Create a scheduler bound to one owner."""
         self.owner = owner
 
     def build_plan(self) -> DailyPlan:

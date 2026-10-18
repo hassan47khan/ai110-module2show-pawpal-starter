@@ -42,6 +42,28 @@ pip install -r requirements.txt
 6. Connect your logic to the Streamlit UI in `app.py`.
 7. Refine UML so it matches what you actually built.
 
+## 🧩 Implementation Summary
+
+PawPal+ is built from four core classes that hand work to each other in one direction, so no
+class has to know how the others do their jobs:
+
+- **`Task`** is one care activity — a description, how long it takes (`duration_minutes`), how
+  often it recurs (`frequency`), a priority, and whether it's completed. It can mark itself done
+  or edit its own fields.
+- **`Pet`** holds a pet's details and its own list of `Task` objects, with methods to add,
+  remove, and return them.
+- **`Owner`** manages one or more `Pet` objects and exposes `get_all_tasks()`, which gathers
+  every pet's tasks into a single list. This is the one place the whole day's work is assembled.
+- **`Scheduler`** is the brain. It reads tasks **only** through `owner.get_all_tasks()` (never
+  from a pet directly), ranks them by priority with shorter tasks breaking ties, and fits as many
+  as possible into the owner's `available_minutes`. It returns a `DailyPlan` of `PlanEntry`
+  objects — each a task, a start time, and the reason it was placed — plus a list of tasks that
+  were skipped and why.
+
+In short: `Owner` owns `Pet`s, each `Pet` owns `Task`s, and the `Scheduler` reads the owner's
+aggregated tasks to produce an explainable `DailyPlan`. See [main.py](main.py) for a runnable
+demo and `tests/test_pawpal.py` for the behavior tests.
+
 ## 🖥️ Sample Output
 
 Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
