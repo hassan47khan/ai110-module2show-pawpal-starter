@@ -16,6 +16,7 @@ classDiagram
         +add_task(task) void
         +remove_task(task_id) void
         +get_tasks() list~Task~
+        +complete_task(task_id) Task
     }
 
     class Task {
@@ -25,13 +26,19 @@ classDiagram
         +str frequency
         +str priority
         +bool completed
+        +str scheduled_time
+        +date due_date
         +mark_complete() void
-        +edit(description, duration_minutes, frequency, priority) void
+        +edit(description, duration_minutes, frequency, priority, scheduled_time) void
     }
 
     class Scheduler {
         +Owner owner
         +build_plan() DailyPlan
+        +sort_by_time(tasks) list~Task~
+        +filter_tasks(completed, pet_name) list~Task~
+        +mark_task_complete(task) Task
+        +detect_conflicts() list~str~
         -rank_tasks(tasks) list~Task~
         -explain(task, scheduled, remaining) str
     }

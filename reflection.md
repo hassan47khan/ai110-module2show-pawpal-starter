@@ -83,8 +83,25 @@ time budget is a single number on Owner.
 
 **b. Tradeoffs**
 
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
+One deliberate tradeoff is in how `Scheduler.detect_conflicts()` defines a conflict: it flags
+two tasks only when they share the **exact same** `scheduled_time` (for example, two tasks both
+at `07:30`). It does **not** check whether one task's duration overlaps the next task's start
+time — a 30-minute task at `08:00` and another at `08:15` are not reported as conflicting, even
+though they would overlap in real life.
+
+I chose exact-match detection because it is simple, fast, and predictable: it groups tasks by
+their time string in a single pass and never has to reason about durations or compare every pair
+of tasks. True overlap detection would mean sorting tasks and checking each one's end time
+(`start + duration_minutes`) against the next one's start, which is more code and more edge
+cases (tasks with no time, tasks spanning midnight) for a feature meant to be a lightweight
+warning rather than a hard guarantee.
+
+This tradeoff is reasonable for PawPal+ because the app's job is to *help* an owner notice
+double-bookings, not to enforce a conflict-free calendar. The scheduler's actual plan
+(`build_plan()`) already lays tasks out back-to-back so they never overlap; `detect_conflicts()`
+is a convenience check on the owner's own requested times. Catching the common, obvious case
+(two things booked at the same minute) delivers most of the value, and I noted overlap-aware
+detection as a clear next step if the app ever needs it.
 
 ---
 
