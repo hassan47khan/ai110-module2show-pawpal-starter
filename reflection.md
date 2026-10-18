@@ -34,8 +34,38 @@ work (action 2), then get a recommendation about it (action 3).
 
 *Initial UML design*
 
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
+My initial UML is a class diagram of six classes, built so that each one maps back to a core
+action and no class does more than one job. The three "noun" classes describe the situation,
+one class does the thinking, and two classes hold the result.
+
+- **Owner** — the person using the app. Holds their name, the time they have for pet care that
+  day (`available_minutes`), a `preferences` dict, and the list of `pets` they own. Its job is
+  to be the single source of the daily time budget and to gather every task across all its pets
+  (`get_all_tasks`). This backs core action 1.
+- **Pet** — one animal. Holds name, species, age, and its own `tasks` list, and can add, remove,
+  or return those tasks. Each pet owns its care tasks so that a multi-pet household stays
+  organized. This backs core action 2.
+- **Task** — one unit of care (a walk, a feeding, a dose of medication). Holds a title, a
+  `duration_minutes`, a `priority`, and whether it's `completed`. Duration and priority are the
+  two fields the scheduler actually reasons about. It can mark itself complete or edit its
+  fields. Also part of core action 2.
+- **Scheduler** — the one class with real logic. It reads an Owner, ranks that owner's tasks
+  (`_rank_tasks`), and fits as many as it can into the available time, producing a plan
+  (`build_plan`) with a reason for each decision (`_explain`). Keeping the algorithm in its own
+  class means the data classes stay simple and the scheduling rules can change without touching
+  them. This is the heart of core action 3.
+- **DailyPlan** — the scheduler's output. Holds the ordered `entries`, the `skipped` tasks with
+  the reason each was dropped, and the `total_minutes` used. It knows how to summarize itself
+  for display. Separating the plan from the scheduler lets the UI show a result without caring
+  how it was produced.
+- **PlanEntry** — one line of the plan: a `task`, its `start_time`, and the `reason` it was
+  placed there. This is what makes action 3 an explanation and not just a sorted list.
+
+The relationships are deliberately simple: an Owner owns one or more Pets, a Pet has zero or
+more Tasks, the Scheduler reads an Owner and creates a DailyPlan, and a DailyPlan contains
+PlanEntries that each refer back to a Task. I left out classes I didn't need yet — there is no
+Calendar, TimeSlot, or Priority class — because priority is just a string on Task and the day's
+time budget is a single number on Owner.
 
 **b. Design changes**
 
