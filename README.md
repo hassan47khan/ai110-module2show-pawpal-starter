@@ -139,7 +139,78 @@ Follow these steps to run and demo the app end to end.
 **CLI demo (`python main.py`):**
 
 ```text
-# Paste the terminal output of `python main.py` here
+#========================================================
+  ALL TASKS (as entered, out of order)
+========================================================
+  TIME   TASK                  MIN  DUE        DONE
+  ------ -------------------- ----  ---------- ----
+  18:00  Evening walk           30  2026-10-18 no
+  07:30  Breakfast              10  2026-10-18 no
+  09:05  Midday play            20  2026-10-18 no
+  12:15  Scoop litter box        5  2026-10-18 no
+  08:45  Brush coat             15  2026-10-18 no
+  07:30  Cat breakfast          10  2026-10-18 no
+
+========================================================
+  SORTED BY TIME (sort_by_time)
+========================================================
+  TIME   TASK                  MIN  DUE        DONE
+  ------ -------------------- ----  ---------- ----
+  07:30  Breakfast              10  2026-10-18 no
+  07:30  Cat breakfast          10  2026-10-18 no
+  08:45  Brush coat             15  2026-10-18 no
+  09:05  Midday play            20  2026-10-18 no
+  12:15  Scoop litter box        5  2026-10-18 no
+  18:00  Evening walk           30  2026-10-18 no
+
+========================================================
+  FILTER: Mochi's tasks only (filter_tasks pet_name='Mochi')
+========================================================
+  TIME   TASK                  MIN  DUE        DONE
+  ------ -------------------- ----  ---------- ----
+  07:30  Breakfast              10  2026-10-18 no
+  09:05  Midday play            20  2026-10-18 no
+  18:00  Evening walk           30  2026-10-18 no
+
+========================================================
+  FILTER: still to do (filter_tasks completed=False)
+========================================================
+  TIME   TASK                  MIN  DUE        DONE
+  ------ -------------------- ----  ---------- ----
+  07:30  Breakfast              10  2026-10-18 no
+  07:30  Cat breakfast          10  2026-10-18 no
+  08:45  Brush coat             15  2026-10-18 no
+  09:05  Midday play            20  2026-10-18 no
+  12:15  Scoop litter box        5  2026-10-18 no
+  18:00  Evening walk           30  2026-10-18 no
+
+========================================================
+  CONFLICT CHECK (detect_conflicts)
+========================================================
+  WARNING: Conflict at 07:30: Breakfast (Mochi), Cat breakfast (Luna)
+
+========================================================
+  RECURRING TASK (complete a weekly task -> next occurrence)
+========================================================
+  Completing 'Brush coat' due 2026-10-18 (weekly)...
+  -> Auto-created next 'Brush coat' due 2026-10-25
+  TIME   TASK                  MIN  DUE        DONE
+  ------ -------------------- ----  ---------- ----
+  07:30  Cat breakfast          10  2026-10-18 no
+  08:45  Brush coat             15  2026-10-18 yes
+  08:45  Brush coat             15  2026-10-25 no
+  12:15  Scoop litter box        5  2026-10-18 no
+
+========================================================
+  TODAY'S PLAN (build_plan, by priority within 90 min)
+========================================================
+Daily plan (90 min scheduled):
+  07:00 - Breakfast (10 min) [high priority]
+  07:10 - Cat breakfast (10 min) [high priority]
+  07:20 - Evening walk (30 min) [high priority]
+  07:50 - Scoop litter box (5 min) [medium priority]
+  07:55 - Midday play (20 min) [medium priority]
+  08:15 - Brush coat (15 min) [low priority]
 ```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
